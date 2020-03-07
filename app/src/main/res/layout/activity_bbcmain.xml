@@ -5,32 +5,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".BBCMainActivity">
+
+    <ProgressBar
+        android:id="@+id/detailed_progressbar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:id="@+id/adding_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
 
 
     <Button
-        android:id="@+id/button_bbs"
+        android:id="@+id/toast_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="BBC News" />
+        android:text="Toast Button" />
 
     <Button
-        android:id="@+id/button_guardian"
+        android:id="@+id/snackbar_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Guardian News" />
+        android:text="snackbar" />
 
-    <Button
-        android:id="@+id/button_nasa_image"
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="NASA Image" />
+        android:layout_height="651dp"
+        android:id="@+id/bbclistview"/>
 
-    <Button
-        android:id="@+id/button_nasa_earth"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="NASA Earth"/>
 
 
 </LinearLayout>

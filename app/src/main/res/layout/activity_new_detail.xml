@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".NewDetailActivity">
+
+
+
+    <TextView
+        android:id="@+id/bbsnews_detailed_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/bbsnews_detailed_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/bbsnews_detailed_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/bbsnews_detailed_url"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView" />
+
+    <Button
+        android:id="@+id/bbcnews_favorite_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save to Favorite" />
+
+    <Button
+        android:id="@+id/goto_webpages"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="load web" />
+</LinearLayout>
