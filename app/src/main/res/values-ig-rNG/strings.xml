@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Agbo eNasa</string>
+    <string name="SnackText">Click For Detail</string>
+    <string name="TextViewText1">Gben email yewan:</string>
+    <string name="TextViewText2">Gben esaien yawan:</string>
+    <string name="ButtonText"> Lahor </string>
+    <string name="ToastText">Review Your Entry</string>
+    <string name="EditText1">Gben ye vban</string>
+    <string name="EditText2"></string>
+
+    <string name="Favourite">Add To Favourite</string>
+    <string name="GoToFav">View Favourite</string>
+
+    <string name="flag">Nigeria</string>
+
+
+</resources>

@@ -20,6 +20,8 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
+import static com.example.cst2335_final_project.R.id.bbclistview;
+
 public class BBCMainActivity extends AppCompatActivity {
     ListView bbcNewsView;
     ArrayList<BBCNewsArticle> articles ;
@@ -30,7 +32,7 @@ public class BBCMainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_bbcmain);
         articles = new ArrayList<>();
         mockData();
-        bbcNewsView = findViewById(R.id.bbclistview);
+        bbcNewsView = findViewById(bbclistview);
 
         EditText putText = findViewById(R.id.adding_text);
         Button toastBtn = findViewById(R.id.toast_btn);

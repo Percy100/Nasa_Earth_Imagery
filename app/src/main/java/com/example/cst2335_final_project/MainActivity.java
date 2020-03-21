@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
         nasaEarthBtn.setOnClickListener(v->{
-            Intent intent = new Intent(getBaseContext(), BBCMainActivity.class);
+            Intent intent = new Intent(getBaseContext(), NasaEarthMainActivity.class);
             startActivity(intent);
         });
     }

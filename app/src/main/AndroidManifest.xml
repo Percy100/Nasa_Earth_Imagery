@@ -2,17 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.cst2335_final_project">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".NewDetailActivity"></activity>
-        <activity android:name=".BBCMainActivity">
-
-        </activity>
+        <activity android:name=".NasaEarthDetailsMainActivity"></activity>
+        <activity android:name=".NasaEarthMainActivity" />
+        <activity android:name=".NewDetailActivity" />
+        <activity android:name=".BBCMainActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
