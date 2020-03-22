@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,9 +39,12 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
     private TextView txtLatitude;
     private TextView txtLongitude;
     private TextView txtDate;
-    private ImageView imgEarthImage;
+ //   private ImageView imgEarthImage;
+    private Image imgEarthImage;
+    private ImageView imageIcon;
     private Button btnAddFavourite;
     private Button btnGoToFavourite;
+
 
 
 
@@ -57,7 +61,9 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
         txtLatitude = findViewById(R.id.textLatitude);
         txtLongitude = findViewById(R.id.textLongitude);
         txtDate = findViewById(R.id.textDate);
-        imgEarthImage= findViewById(R.id.imageView);
+      //  imgEarthImage= findViewById(R.id.imageView);
+        imageIcon =  findViewById(R.id.imageView);
+
 
         btnAddFavourite = findViewById(R.id.addFavButton);
         btnGoToFavourite = findViewById(R.id.goToFav);
@@ -66,6 +72,10 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
         earth.execute();
 
         Log.i(ACTIVITY_NAME, "In onCreate()");
+
+
+
+
     }
 
 
@@ -99,7 +109,7 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
         String inputLong;
         String date;
         String imageName;
-        Bitmap imageIcon;
+      //  Bitmap imageIcon;
         String imgurl;
 
 
@@ -113,14 +123,16 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
             String ret = null;
             String data;
 
-            String queryURL = "https://api.nasa.gov/planetary/earth/imagery/?lon=" + inputLong +"&lat=" + inputLat + "&date=2014-02-01&api_key=DEMO_KEY";
+          //  String queryURL = "https://api.nasa.gov/planetary/earth/imagery/?lon=" + inputLong +"&lat=" + inputLat + "&date=2014-02-01&api_key=DEMO_KEY";
+
+            String queryURL = "https://api.nasa.gov/planetary/earth/imagery/?lon=" + inputLong +"&lat=" + inputLat + "&date=2014-02-01&api_key=Q767GDDKS75D1mIx6UZjEtWmbppuBzpCLAC53ylJ";
 
             try {
 
                 URL url = new URL(queryURL);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 InputStream inputStream = urlConnection.getInputStream();
-                InputStream c = urlConnection.getInputStream();
+  //              InputStream c = urlConnection.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
 
                 StringBuilder sb = new StringBuilder();
@@ -139,9 +151,6 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
                 publishProgress(70);
                 String id = jObject.getString("id");
                 publishProgress(100);
-
-
-
 
 
 
@@ -203,18 +212,69 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
             txtLongitude.setText("Long:" +" "+ inputLong);
             txtDate .setText("Date:" +" "+ date);
        //     imgEarthImage.setImageBitmap(imageIcon);
-        //    imgEarthImage = imgEarthImage;
+
+
+//            Picasso.with(NasaEarthDetailsMainActivity.this).load(imgurl)
+//                    .resize(14,10)
+//                    .centerCrop()
+//                    .into(imgEarthImage);
 
             Picasso.with(NasaEarthDetailsMainActivity.this).load(imgurl)
                     .resize(14,10)
                     .centerCrop()
-                    .into(imgEarthImage);
+                    .into(imageIcon);
             progressBar.setVisibility(View.INVISIBLE);
+
+        //    NasaEarth ne = new NasaEarth(inputLat,inputLong,date,imageIcon);
+
+            if (btnAddFavourite != null) {
+                btnAddFavourite.setOnClickListener(bt -> {
+
+                    String inputLatF = txtLatitude.getText().toString();
+
+                    String inputLongF = txtLongitude.getText().toString();
+                    String dateF = txtDate.getText().toString();
+                    String urlF = imgurl;
+
+                    Intent goToFavPage = new Intent(NasaEarthDetailsMainActivity.this, NasaEarthFavourite.class);
+                    goToFavPage.putExtra("inputLatF", inputLatF);
+                    goToFavPage.putExtra("inputLongF", inputLongF);
+                    goToFavPage.putExtra("dateF", dateF);
+                    goToFavPage.putExtra("urlF", urlF);
+              //      startActivity(goToFavPage);
+
+                    Log.e(ACTIVITY_NAME, "in function onPause()");
+                });
+            }
+
+            if (btnGoToFavourite != null) {
+                btnGoToFavourite.setOnClickListener(bt -> {
+
+//                    String inputLatF = txtLatitude.getText().toString();
+//
+//                    String inputLongF = txtLongitude.getText().toString();
+//                    String dateF = txtDate.getText().toString();
+//                    String urlF = imgurl;
+
+                    Intent goToFavPage = new Intent(NasaEarthDetailsMainActivity.this, NasaEarthFavourite.class);
+//                    goToFavPage.putExtra("inputLatF", inputLatF);
+//                    goToFavPage.putExtra("inputLongF", inputLongF);
+//                    goToFavPage.putExtra("dateF", dateF);
+//                    goToFavPage.putExtra("urlF", urlF);
+                    startActivity(goToFavPage);
+
+                    Log.e(ACTIVITY_NAME, "in function onPause()");
+                });
+            }
+
 
 
         }
 
 
+
     }
+
+
 }
 

@@ -3,9 +3,13 @@ package com.example.cst2335_final_project;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -14,6 +18,10 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 
 public class NasaEarthMainActivity extends AppCompatActivity {
+
+    static final String ACTIVITY_NAME = "NasaEarthMainActivity";
+
+    SharedPreferences sp;
 
     Button snackbtn;
     EditText editT1;
@@ -30,11 +38,16 @@ public class NasaEarthMainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nasa_earth_main);
 
+        sp = getSharedPreferences("FileName", Context.MODE_PRIVATE);
+
         snackbtn = (Button)findViewById(R.id.snackButton);
         editT1 = findViewById(R.id.editText1);
         editT2 = findViewById(R.id.editText2);
         toastbtn = findViewById(R.id.toastButton);
         submitbtn = findViewById(R.id.submitButton);
+
+        editT1.setText(sp.getString("Latitude", ""));
+//        editT2.setText(sp.getString("Longitude", ""));
 
         nasaMain = findViewById(R.id.nasaMainLayout);
 
@@ -85,7 +98,44 @@ public class NasaEarthMainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.e(ACTIVITY_NAME,"onStart");
+    }
 
+    @Override
+    protected void onPause() {
+        EditText editText1 = findViewById(R.id.editText1);
+        EditText editText2 = findViewById(R.id.editText2);
+        super.onPause();
+        Log.e(ACTIVITY_NAME,"onPause");
+        saveSharedPrefs( editText1.getText().toString());
+  //      saveSharedPrefs( editText2.getText().toString());
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(ACTIVITY_NAME,"onResume");
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(ACTIVITY_NAME, "onDestroy");
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.e(ACTIVITY_NAME, "onRestart");
+    }
+
+    private void saveSharedPrefs(String stringToSave) {
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("Latitude", stringToSave);
+ //       editor.putString("Longitude", stringToSave);
+        editor.commit();
+
+    }
 
 
 
