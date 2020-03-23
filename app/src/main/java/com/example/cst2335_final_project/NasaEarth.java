@@ -6,30 +6,47 @@ import android.widget.ImageView;
 
 public class NasaEarth {
 
-    private String Latitude, Longitude, date, url;
+    private String latitude, longitude, date, url;
+    private long id;
  //   private ImageView image;
 
     public NasaEarth(String latitude, String longitude, String date, String url) {
-        Latitude = latitude;
-        Longitude = longitude;
+        this.latitude = latitude;
+        this.longitude = longitude;
         this.date = date;
         this.url = url;
     }
 
+    public NasaEarth(Long id, String latitude, String longitude, String date, String url) {
+        this.id = id;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.date = date;
+        this.url = url;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public String getLatitude() {
-        return Latitude;
+        return latitude;
     }
 
     public void setLatitude(String latitude) {
-        Latitude = latitude;
+        this.latitude = latitude;
     }
 
     public String getLongitude() {
-        return Longitude;
+        return longitude;
     }
 
     public void setLongitude(String longitude) {
-        Longitude = longitude;
+        this.longitude = longitude;
     }
 
     public String getDate() {

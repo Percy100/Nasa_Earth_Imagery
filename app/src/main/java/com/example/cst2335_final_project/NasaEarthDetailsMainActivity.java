@@ -123,16 +123,15 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
             String ret = null;
             String data;
 
-          //  String queryURL = "https://api.nasa.gov/planetary/earth/imagery/?lon=" + inputLong +"&lat=" + inputLat + "&date=2014-02-01&api_key=DEMO_KEY";
+            String queryURL = "https://api.nasa.gov/planetary/earth/imagery/?lon=" + inputLong +"&lat=" + inputLat + "&date=2014-02-01&api_key=DEMO_KEY";
 
-            String queryURL = "https://api.nasa.gov/planetary/earth/imagery/?lon=" + inputLong +"&lat=" + inputLat + "&date=2014-02-01&api_key=Q767GDDKS75D1mIx6UZjEtWmbppuBzpCLAC53ylJ";
+        //    String queryURL = "https://api.nasa.gov/planetary/earth/imagery/?lon=" + inputLong +"&lat=" + inputLat + "&date=2014-02-01&api_key=Q767GDDKS75D1mIx6UZjEtWmbppuBzpCLAC53ylJ";
 
             try {
 
                 URL url = new URL(queryURL);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
                 InputStream inputStream = urlConnection.getInputStream();
-  //              InputStream c = urlConnection.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
 
                 StringBuilder sb = new StringBuilder();
@@ -151,40 +150,6 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
                 publishProgress(70);
                 String id = jObject.getString("id");
                 publishProgress(100);
-
-
-
-
-
-
-
-
-//                URL iconUrl = new URL(imgurl + imageName + ".png");
-//                //     URL iconUrl = new URL("https://earthengine.googleapis.com/api/thumb?thumbid=31dbf5b72d114cc8c12cc7812add59b5&token=fe3be37f467aea639a4f97d7c5c28a71");
-//                //      URL iconUrl = new URL("https://earthengine.googleapis.com/api/thumb?thumbid=c87c9101afae02a432e1f5cf3db6f55c&token=ae1542f81ee766b0531ae47375bef239"+imageName+".png");
-//                String imageFile = imageName + ".png";
-//
-//                if (fileExistance(imageFile)) {
-//                    FileInputStream fis = null;
-//
-//                    try {
-//                        fis = openFileInput(imageFile);
-//                    } catch (FileNotFoundException e) {
-//                        e.printStackTrace();
-//                    }
-//                    imageIcon = BitmapFactory.decodeStream(fis);
-//                    Log.i(ACTIVITY_NAME, "File imageFile Exists");
-//                } else {
-//                    imageIcon = getImage(iconUrl);
-//                    FileOutputStream outputStream = openFileOutput(imageName + ".png",
-//                            Context.MODE_PRIVATE);
-//                    imageIcon.compress(Bitmap.CompressFormat.PNG, 80, outputStream);
-//                    outputStream.flush();
-//                    outputStream.close();
-//                    Log.i(ACTIVITY_NAME, "Added New Image");
-//                }
-//                Log.i(ACTIVITY_NAME, "filename=" + imageFile);
-//                publishProgress(100);
 
             } catch (FileNotFoundException ex) {
                 ex.printStackTrace();
@@ -207,25 +172,15 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            // String degree = Character.toString((char) 0x00B0);
             txtLatitude.setText("Lat:" +" "+inputLat);
             txtLongitude.setText("Long:" +" "+ inputLong);
             txtDate .setText("Date:" +" "+ date);
-       //     imgEarthImage.setImageBitmap(imageIcon);
-
-
-//            Picasso.with(NasaEarthDetailsMainActivity.this).load(imgurl)
-//                    .resize(14,10)
-//                    .centerCrop()
-//                    .into(imgEarthImage);
 
             Picasso.with(NasaEarthDetailsMainActivity.this).load(imgurl)
                     .resize(14,10)
                     .centerCrop()
                     .into(imageIcon);
             progressBar.setVisibility(View.INVISIBLE);
-
-        //    NasaEarth ne = new NasaEarth(inputLat,inputLong,date,imageIcon);
 
             if (btnAddFavourite != null) {
                 btnAddFavourite.setOnClickListener(bt -> {
@@ -241,40 +196,15 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
                     goToFavPage.putExtra("inputLongF", inputLongF);
                     goToFavPage.putExtra("dateF", dateF);
                     goToFavPage.putExtra("urlF", urlF);
-              //      startActivity(goToFavPage);
-
-                    Log.e(ACTIVITY_NAME, "in function onPause()");
-                });
-            }
-
-            if (btnGoToFavourite != null) {
-                btnGoToFavourite.setOnClickListener(bt -> {
-
-//                    String inputLatF = txtLatitude.getText().toString();
-//
-//                    String inputLongF = txtLongitude.getText().toString();
-//                    String dateF = txtDate.getText().toString();
-//                    String urlF = imgurl;
-
-                    Intent goToFavPage = new Intent(NasaEarthDetailsMainActivity.this, NasaEarthFavourite.class);
-//                    goToFavPage.putExtra("inputLatF", inputLatF);
-//                    goToFavPage.putExtra("inputLongF", inputLongF);
-//                    goToFavPage.putExtra("dateF", dateF);
-//                    goToFavPage.putExtra("urlF", urlF);
                     startActivity(goToFavPage);
 
                     Log.e(ACTIVITY_NAME, "in function onPause()");
                 });
             }
 
-
-
         }
 
-
-
     }
-
 
 }
 
