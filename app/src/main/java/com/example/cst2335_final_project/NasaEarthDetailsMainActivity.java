@@ -52,8 +52,7 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
     private Button btnGoToSearch;
     LinearLayout nasaDetails;
 
-
-
+    private NasaEarthFragment dFragment;
 
     NasaEarthMainActivity nasaEarthMain = new NasaEarthMainActivity();
 
@@ -83,6 +82,21 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
 
         Log.i(ACTIVITY_NAME, "In onCreate()");
 
+
+//        Bundle dataToPass = new Bundle();
+//        dataToPass.putString("Message", item.getMessage());
+//        dataToPass.putString("MessageID", String.valueOf(id));
+//        dataToPass.putBoolean("isTablet", true);
+//        //  bundle.putBoolean("isSend", item.getMsgSent());
+//
+//        //Use a Bundle to pass the message string, and the database id of the selected item to the fragment in the FragmentTransaction
+//        // if(findViewById(R.id.fragmentLocation) != null) {
+//            dFragment = new DetailFragment();
+//            dFragment.setArguments(dataToPass);
+//            getSupportFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
+//                    .commit();
 
 
 
@@ -132,6 +146,24 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
 
             String ret = null;
             String data;
+
+//            inputLatitude = editT1.getText().toString();
+//            inputLongitude = editT2.getText().toString();
+//            String date ="";
+//            String url ="";
+            NasaEarth ne = new NasaEarth(inputLat, inputLong, date, imgurl);
+
+            Bundle dataToPass = new Bundle();
+            dataToPass.putString("Latitude", "Search Latitude is " + ne.getLatitude());
+            dataToPass.putString("Longitude", "Search Longitude is " + ne.getLongitude());
+
+            //Use a Bundle to pass the latitude and latitude string to the fragment in the FragmentTransaction
+            dFragment = new NasaEarthFragment();
+            dFragment.setArguments(dataToPass);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
+                    .commit();
 
        //     String queryURL = "https://api.nasa.gov/planetary/earth/imagery/?lon=" + inputLong +"&lat=" + inputLat + "&date=2014-02-01&api_key=DEMO_KEY";
 

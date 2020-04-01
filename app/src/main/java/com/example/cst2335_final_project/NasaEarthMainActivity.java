@@ -36,6 +36,8 @@ public class NasaEarthMainActivity extends AppCompatActivity {
     private String inputLongitude;
     private ProgressBar progressBar;
 
+    private NasaEarthFragment dFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,6 +58,26 @@ public class NasaEarthMainActivity extends AppCompatActivity {
 //        editT2.setText(sp.getString("Longitude", ""));
 
         nasaMain = findViewById(R.id.nasaMainLayout);
+
+        inputLatitude = editT1.getText().toString();
+        inputLongitude = editT2.getText().toString();
+        String date ="";
+        String url ="";
+        NasaEarth ne = new NasaEarth(inputLatitude, inputLongitude, date, url);
+
+        Bundle dataToPass = new Bundle();
+        dataToPass.putString("Latitude", "Default Latitude is " + ne.getLatitude());
+        dataToPass.putString("Longitude", ne.getLongitude());
+
+        //Use a Bundle to pass the latitude and latitude string to the fragment in the FragmentTransaction
+            dFragment = new NasaEarthFragment();
+            dFragment.setArguments(dataToPass);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
+                    .commit();
+
+
 
 
         snackbtn.setOnClickListener((view)->{
