@@ -15,10 +15,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -31,6 +37,14 @@ public class NasaEarthFavourite extends AppCompatActivity {
     ImageView imageIcon;
     SQLiteDatabase db;
 
+    private ProgressBar progressBar;
+
+    EditText txtTitle;
+    Button btnGoToDet;
+    Button btnGoToSearch;
+    RelativeLayout nasaFavourite;
+
+
     private static final String ACTIVITY_NAME = "NasaEarthFavourite";
 
     ArrayList<NasaEarth> earthList = new ArrayList<>();
@@ -39,6 +53,15 @@ public class NasaEarthFavourite extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nasa_earth_favourite);
+
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
+
+        txtTitle = findViewById(R.id.TitleText);
+        btnGoToDet = findViewById(R.id.DetailsButton);
+        btnGoToSearch = findViewById(R.id.SearchButton);
+
+        nasaFavourite = findViewById(R.id.nasaFavouriteLayout);
 
         myList = findViewById(R.id.favouriteList);
 
@@ -69,33 +92,48 @@ public class NasaEarthFavourite extends AppCompatActivity {
         myAdapter.notifyDataSetChanged();
 
 
-        myList.setOnItemLongClickListener((parent, view, pos, id) -> {
+        btnGoToDet.setOnClickListener((view)->{
+            Snackbar.make(nasaFavourite, "Loading Details Page", Snackbar.LENGTH_LONG).show();
+//            Intent intent = new Intent(NasaEarthFavourite.this, NasaEarthDetailsMainActivity.class);
+//            startActivity(intent);
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(NasaEarthFavourite.this);
-
-            builder.setTitle("Do you want to delete this?")
-                    .setMessage("The selected row is: " + pos + "\n" + "The database is: " + id)
-                    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            db.delete(MyOpener.TABLE_NAME, MyOpener.COL_ID + "= ?", new String[]{Long.toString(earthList.get(pos).getId())});
-                            earthList.remove(pos);
-                            myAdapter.notifyDataSetChanged();
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                        }
-                    });
-
-            AlertDialog alert = builder.create();
-            alert.show();
-
-            return true;
         });
 
-    }
+
+        btnGoToSearch.setOnClickListener((view)-> {
+            Toast.makeText(NasaEarthFavourite.this, "Loading Search Page", Toast.LENGTH_LONG).show();
+        });
+
+
+        myList.setOnItemLongClickListener((parent, view, pos, id) -> {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(NasaEarthFavourite.this);
+
+        builder.setTitle("Do you want to delete this?")
+                .setMessage("The selected row is: " + pos + "\n" + "The database is: " + id)
+                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        db.delete(MyOpener.TABLE_NAME, MyOpener.COL_ID + "= ?", new String[]{Long.toString(earthList.get(pos).getId())});
+                        earthList.remove(pos);
+                        myAdapter.notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+        AlertDialog alert = builder.create();
+        alert.show();
+
+        return true;
+    });
+
+}
+
+
 
     private void loadEarths() {
         String[] columns = {MyOpener.COL_ID, MyOpener.COL_LATITUDE, MyOpener.COL_LONGITUDE, MyOpener.COL_DATE, MyOpener.COL_URL};
@@ -121,6 +159,8 @@ public class NasaEarthFavourite extends AppCompatActivity {
             earthList.add(ne);
         }
     }
+
+
 
 
 
@@ -225,6 +265,8 @@ public class NasaEarthFavourite extends AppCompatActivity {
     {
         super.onStop();
     }
+
+
 
 
     public void printCursor(Cursor cursor) {

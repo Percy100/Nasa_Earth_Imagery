@@ -2,7 +2,9 @@ package com.example.cst2335_final_project;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -13,9 +15,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -44,6 +49,8 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
     private ImageView imageIcon;
     private Button btnAddFavourite;
     private Button btnGoToFavourite;
+    private Button btnGoToSearch;
+    LinearLayout nasaDetails;
 
 
 
@@ -67,6 +74,9 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
 
         btnAddFavourite = findViewById(R.id.addFavButton);
         btnGoToFavourite = findViewById(R.id.goToFav);
+        btnGoToSearch = findViewById(R.id.goToSearch);
+
+        nasaDetails = findViewById(R.id.nasaDetailsLayout);
 
         EarthQuery earth = new EarthQuery();
         earth.execute();
@@ -123,9 +133,11 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
             String ret = null;
             String data;
 
-            String queryURL = "https://api.nasa.gov/planetary/earth/imagery/?lon=" + inputLong +"&lat=" + inputLat + "&date=2014-02-01&api_key=DEMO_KEY";
+       //     String queryURL = "https://api.nasa.gov/planetary/earth/imagery/?lon=" + inputLong +"&lat=" + inputLat + "&date=2014-02-01&api_key=DEMO_KEY";
 
         //    String queryURL = "https://api.nasa.gov/planetary/earth/imagery/?lon=" + inputLong +"&lat=" + inputLat + "&date=2014-02-01&api_key=Q767GDDKS75D1mIx6UZjEtWmbppuBzpCLAC53ylJ";
+
+            String queryURL = "http://dev.virtualearth.net/REST/V1/Imagery/Map/Birdseye/37.802297,-122.405844/20?dir=180&ms=5000,5000&key=%20Am4AaTUqExihH1ur1tkSwWH1FodthGyd8wlXp8V5ue-Kk24zaV2QWBTxnsza2LJl";
 
             try {
 
@@ -146,7 +158,8 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
 
                 date = jObject.getString("date");
                 publishProgress(35);
-                imgurl = jObject.getString("url");
+             //   imgurl = jObject.getString("url");
+                imgurl = "http://dev.virtualearth.net/REST/V1/Imagery/Map/Birdseye/37.802297,-122.405844/20?dir=180&ms=500,500&key= Am4AaTUqExihH1ur1tkSwWH1FodthGyd8wlXp8V5ue-Kk24zaV2QWBTxnsza2LJl";
                 publishProgress(70);
                 String id = jObject.getString("id");
                 publishProgress(100);
@@ -182,8 +195,29 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
                     .into(imageIcon);
             progressBar.setVisibility(View.INVISIBLE);
 
+//            if (btnAddFavourite != null) {
+//                btnAddFavourite.setOnClickListener(bt -> {
+//
+//                    String inputLatF = txtLatitude.getText().toString();
+//
+//                    String inputLongF = txtLongitude.getText().toString();
+//                    String dateF = txtDate.getText().toString();
+//                    String urlF = imgurl;
+//
+//                    Intent goToFavPage = new Intent(NasaEarthDetailsMainActivity.this, NasaEarthFavourite.class);
+//                    goToFavPage.putExtra("inputLatF", inputLatF);
+//                    goToFavPage.putExtra("inputLongF", inputLongF);
+//                    goToFavPage.putExtra("dateF", dateF);
+//                    goToFavPage.putExtra("urlF", urlF);
+//                    startActivity(goToFavPage);
+//
+//                    Log.e(ACTIVITY_NAME, "in function onPause()");
+//                });
+//            }
+
+
             if (btnAddFavourite != null) {
-                btnAddFavourite.setOnClickListener(bt -> {
+                btnAddFavourite.setOnClickListener((view) -> {
 
                     String inputLatF = txtLatitude.getText().toString();
 
@@ -191,20 +225,57 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
                     String dateF = txtDate.getText().toString();
                     String urlF = imgurl;
 
-                    Intent goToFavPage = new Intent(NasaEarthDetailsMainActivity.this, NasaEarthFavourite.class);
-                    goToFavPage.putExtra("inputLatF", inputLatF);
-                    goToFavPage.putExtra("inputLongF", inputLongF);
-                    goToFavPage.putExtra("dateF", dateF);
-                    goToFavPage.putExtra("urlF", urlF);
-                    startActivity(goToFavPage);
 
+                    AlertDialog.Builder builder = new AlertDialog.Builder(NasaEarthDetailsMainActivity.this);
+
+                    builder.setTitle("Details")
+                            .setMessage("Earth with" + "\n" + "Latitude: " + inputLatF + "\n" + "Longitude: " + inputLongF + "\n" + "Date: " + dateF +"\n" +"is being added to favourite list")
+                            .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent goToFavPage = new Intent(NasaEarthDetailsMainActivity.this, NasaEarthFavourite.class);
+                                    goToFavPage.putExtra("inputLatF", inputLatF);
+                                    goToFavPage.putExtra("inputLongF", inputLongF);
+                                    goToFavPage.putExtra("dateF", dateF);
+                                    goToFavPage.putExtra("urlF", urlF);
+                                    startActivity(goToFavPage);
+                                }
+                            })
+                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                }
+                            });
+
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                    //return false;
                     Log.e(ACTIVITY_NAME, "in function onPause()");
                 });
+
+
             }
 
-        }
+            btnGoToFavourite.setOnClickListener(v->{
+                Snackbar.make(nasaDetails, "Loading Favourite Page", Snackbar.LENGTH_LONG).show();
+            });
+
+
+
+            btnGoToSearch.setOnClickListener((view)-> {
+                Toast.makeText(NasaEarthDetailsMainActivity.this, "Loading Seacrh Page", Toast.LENGTH_LONG).show();
+            });
+
+
+
+
+
+
+
+
+
 
     }
 
+    }
 }
-

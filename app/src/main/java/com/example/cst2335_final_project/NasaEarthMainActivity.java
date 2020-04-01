@@ -10,9 +10,11 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -32,11 +34,15 @@ public class NasaEarthMainActivity extends AppCompatActivity {
 
     private String inputLatitude;
     private String inputLongitude;
+    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nasa_earth_main);
+
+        progressBar = findViewById(R.id.progressBar);
+        progressBar.setVisibility(View.VISIBLE);
 
         sp = getSharedPreferences("FileName", Context.MODE_PRIVATE);
 
@@ -52,10 +58,9 @@ public class NasaEarthMainActivity extends AppCompatActivity {
         nasaMain = findViewById(R.id.nasaMainLayout);
 
 
-        snackbtn.setOnClickListener(v->{
+        snackbtn.setOnClickListener((view)->{
             Snackbar.make(nasaMain, "Please Enter Details", Snackbar.LENGTH_LONG).show();
         });
-
 
 
         toastbtn.setOnClickListener((view)-> {
@@ -63,15 +68,18 @@ public class NasaEarthMainActivity extends AppCompatActivity {
                         + "while Longitude is " + editT2.getText().toString(), Toast.LENGTH_LONG).show();
     });
 
+//        progressBar.setVisibility(View.VISIBLE);
+//        Log.i(ACTIVITY_NAME, "In onProgressUpdate");
+
         submitbtn.setOnClickListener((view) -> {
 
             inputLatitude = editT1.getText().toString();
             inputLongitude = editT2.getText().toString();
 
-            Intent input = new Intent(NasaEarthMainActivity.this, NasaEarthDetailsMainActivity.class);
-            input.putExtra("inputLatitude", inputLatitude);
-            input.putExtra("inputLongitude", inputLongitude);
-            startActivity(input);
+//            Intent input = new Intent(NasaEarthMainActivity.this, NasaEarthDetailsMainActivity.class);
+//            input.putExtra("inputLatitude", inputLatitude);
+//            input.putExtra("inputLongitude", inputLongitude);
+        //    startActivity(input);
 
 
             AlertDialog.Builder builder = new AlertDialog.Builder(NasaEarthMainActivity.this);
@@ -81,8 +89,10 @@ public class NasaEarthMainActivity extends AppCompatActivity {
                     .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
                         @Override
                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(NasaEarthMainActivity.this, NasaEarthDetailsMainActivity.class);
-                                startActivity(intent);
+                            Intent input = new Intent(NasaEarthMainActivity.this, NasaEarthDetailsMainActivity.class);
+                            input.putExtra("inputLatitude", inputLatitude);
+                            input.putExtra("inputLongitude", inputLongitude);
+                                startActivity(input);
                         }
                     })
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -136,6 +146,8 @@ public class NasaEarthMainActivity extends AppCompatActivity {
         editor.commit();
 
     }
+
+
 
 
 

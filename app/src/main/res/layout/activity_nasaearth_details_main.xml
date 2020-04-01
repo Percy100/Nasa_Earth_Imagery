@@ -2,6 +2,7 @@
  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    android:id="@+id/nasaDetailsLayout"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
 <RelativeLayout
@@ -63,6 +64,14 @@
 
 </RelativeLayout>
 
+    <EditText
+        android:id="@+id/editTextInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="fill"
+        android:hint="Type action and click action botton">
+    </EditText>
+
     <Button
         android:id="@+id/addFavButton"
         android:layout_width="match_parent"
@@ -74,5 +83,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/GoToFav" />
+
+    <Button
+        android:id="@+id/goToSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Back To Search" />
 
 </LinearLayout>
