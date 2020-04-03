@@ -10,14 +10,14 @@
         app:showAsAction="never"/>  <!-- This uses showAsAction=always, so look at icon= parameter -->
 
 
-    <item android:id="@+id/detailActivity"
+    <item android:id="@+id/detailsActivity"
         android:icon="@drawable/our_people"
         android:orderInCategory="100"
         app:showAsAction="always"
-        android:title="Detail Page"/>
+        android:title="Details Page"/>
 
 
-    <item android:id="@+id/mainActivity"
+    <item android:id="@+id/searchActivity"
         android:icon="@drawable/complaints"
         android:title="Search Page"
         app:showAsAction="always"

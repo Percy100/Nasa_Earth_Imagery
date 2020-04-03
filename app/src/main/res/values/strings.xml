@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Nasa Earth</string>
-    <string name="SnackText">Click For Detail</string>
+    <string name="SnackText">Home Page</string>
     <string name="TextViewText1">Enter Latitude Here:</string>
     <string name="TextViewText2">Enter Longitude Here:</string>
     <string name="ToastText">Review Your Entry</string>
@@ -8,11 +8,14 @@
     <string name="EditText1">Type Latitude here</string>
     <string name="EditText2">Type Longitude here</string>
 
-    <string name="Favourite">Add To Favourite</string>
-    <string name="GoToFav">View Favourite</string>
+    <string name="Favourite">Add To Favorite</string>
+    <string name="GoToFav">View Favorite</string>
 
     <string name="flag">Canada</string>
 
     <string name="Help">Help</string>
+
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
 </resources>

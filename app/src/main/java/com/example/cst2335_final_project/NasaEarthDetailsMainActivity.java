@@ -1,6 +1,10 @@
 package com.example.cst2335_final_project;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -12,14 +16,19 @@ import android.media.Image;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
@@ -35,9 +44,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
+import com.google.android.material.navigation.NavigationView;
 
 
-public class NasaEarthDetailsMainActivity extends AppCompatActivity {
+public class NasaEarthDetailsMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     protected static final String ACTIVITY_NAME = "NasaEarthDetailsMainActivity";
     private ProgressBar progressBar;
@@ -50,9 +62,15 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
     private Button btnAddFavourite;
     private Button btnGoToFavourite;
     private Button btnGoToSearch;
-    LinearLayout nasaDetails;
+    private EditText inputText;
+    private LinearLayout nasaDetails;
+
 
     private NasaEarthFragment dFragment;
+
+    DrawerLayout drawer;
+    NavigationView navigationView;
+
 
     NasaEarthMainActivity nasaEarthMain = new NasaEarthMainActivity();
 
@@ -74,8 +92,27 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
         btnAddFavourite = findViewById(R.id.addFavButton);
         btnGoToFavourite = findViewById(R.id.goToFav);
         btnGoToSearch = findViewById(R.id.goToSearch);
+        inputText = findViewById(R.id.editTextInput);
+
 
         nasaDetails = findViewById(R.id.nasaDetailsLayout);
+
+        //This gets the toolbar from the layout:
+        Toolbar tBar = (Toolbar) findViewById(R.id.toolbar);
+
+        //This loads the toolbar, which calls onCreateOptionsMenu below:
+        setSupportActionBar(tBar);
+
+        //For NavigationDrawer:
+        drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                drawer, tBar, R.string.open, R.string.close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
 
         EarthQuery earth = new EarthQuery();
         earth.execute();
@@ -127,6 +164,74 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
         return file.exists();
     }
 
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.nasaearth_toolbar, menu );
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.helpItem){
+            // Toast.makeText(this, "Hello world", Toast.LENGTH_LONG).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(NasaEarthDetailsMainActivity.this);
+
+            builder.setTitle("INSTRUCTIONS")
+                    .setMessage("* Click 'ADD TO FAVORITE' to add to favorite list" + "\n" + "* Click 'VIEW FAVORITE' to view favorite list" + "\n" + "* Click 'HOME PAGE' to go to home page")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .setNegativeButton(null, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+            //return false;
+            Log.e(ACTIVITY_NAME, "in function onPause()");
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.favActivity:
+                startActivity(new Intent(this, NasaEarthFavourite.class));
+                break;
+            case R.id.detailsActivity:
+                startActivity(new Intent(this, NasaEarthDetailsMainActivity.class));
+                break;
+            case R.id.searchActivity:
+                startActivity(new Intent(this, NasaEarthMainActivity.class));
+                break;
+        }
+
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return false;
+    }
+
+
+
+
+
+
+
+
+
     private class EarthQuery extends AsyncTask<String, Integer, String> {
 
         String inputLat;
@@ -169,7 +274,7 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
 
         //    String queryURL = "https://api.nasa.gov/planetary/earth/imagery/?lon=" + inputLong +"&lat=" + inputLat + "&date=2014-02-01&api_key=Q767GDDKS75D1mIx6UZjEtWmbppuBzpCLAC53ylJ";
 
-            String queryURL = "http://dev.virtualearth.net/REST/V1/Imagery/Map/Birdseye/37.802297,-122.405844/20?dir=180&ms=5000,5000&key=%20Am4AaTUqExihH1ur1tkSwWH1FodthGyd8wlXp8V5ue-Kk24zaV2QWBTxnsza2LJl";
+            String queryURL = "http://dev.virtualearth.net/REST/V1/Imagery/Map/Birdseye/37,-122/20?dir=180&ms=500,500&key=%20Am4AaTUqExihH1ur1tkSwWH1FodthGyd8wlXp8V5ue-Kk24zaV2QWBTxnsza2LJl";
 
             try {
 
@@ -191,7 +296,7 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
                 date = jObject.getString("date");
                 publishProgress(35);
              //   imgurl = jObject.getString("url");
-                imgurl = "http://dev.virtualearth.net/REST/V1/Imagery/Map/Birdseye/37.802297,-122.405844/20?dir=180&ms=500,500&key= Am4AaTUqExihH1ur1tkSwWH1FodthGyd8wlXp8V5ue-Kk24zaV2QWBTxnsza2LJl";
+                imgurl = "http://dev.virtualearth.net/REST/V1/Imagery/Map/Birdseye/37.802297,-122.405844/20?dir=180&ms=500,500&key=%20Am4AaTUqExihH1ur1tkSwWH1FodthGyd8wlXp8V5ue-Kk24zaV2QWBTxnsza2LJl";
                 publishProgress(70);
                 String id = jObject.getString("id");
                 publishProgress(100);
@@ -288,15 +393,33 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity {
 
             }
 
-            btnGoToFavourite.setOnClickListener(v->{
-                Snackbar.make(nasaDetails, "Loading Favourite Page", Snackbar.LENGTH_LONG).show();
+//            btnGoToFavourite.setOnClickListener(v->{
+//                Snackbar.make(nasaDetails, "Click on menu to access favorite", Snackbar.LENGTH_LONG).show();
+//            });
+
+            btnGoToFavourite.setOnClickListener((view)-> {
+                Toast.makeText(NasaEarthDetailsMainActivity.this, "Click on menu to access favorite", Toast.LENGTH_LONG).show();
             });
-
-
+            inputText.setOnClickListener((view)-> {
+                Toast.makeText(NasaEarthDetailsMainActivity.this, inputText.getText().toString(), Toast.LENGTH_LONG).show();
+            });
 
             btnGoToSearch.setOnClickListener((view)-> {
-                Toast.makeText(NasaEarthDetailsMainActivity.this, "Loading Seacrh Page", Toast.LENGTH_LONG).show();
+                Snackbar snackbar = Snackbar.make(nasaDetails, "Loading Home Page", Snackbar.LENGTH_LONG).setAction("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(NasaEarthDetailsMainActivity.this, MainActivity.class));
+                    }
+                });
+                snackbar.show();
             });
+
+
+//            btnGoToSearch.setOnClickListener((view)-> {
+//                Toast.makeText(NasaEarthDetailsMainActivity.this, "Loading Seacrh Page", Toast.LENGTH_LONG).show();
+//            });
+
+
 
 
 

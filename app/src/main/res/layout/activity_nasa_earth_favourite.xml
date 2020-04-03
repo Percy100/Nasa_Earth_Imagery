@@ -1,36 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".NasaEarthMainActivity"
+    android:id="@+id/nasaMainLayout">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/drawer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            tools:openDrawer="start">
+
+            <Button
+                android:id="@+id/insert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Welcome To The Possibilities" />
+
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/nav_view"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_gravity="start"
+                android:fitsSystemWindows="true"
+                app:headerLayout="@layout/nasaearth_header_layout"
+                app:menu="@menu/nasaearth_drawer" />
+        </androidx.drawerlayout.widget.DrawerLayout>
+
+    </LinearLayout>
+
+
+
+
+<RelativeLayout
     android:id="@+id/nasaFavouriteLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
-        android:id="@+id/progressBar"
-        android:visibility="invisible"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:progressDrawable="@drawable/progressnasaearth">
-    </ProgressBar>
+
+
 
     <ListView
         android:id="@+id/favouriteList"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:id="@+id/progressBar"
+            android:visibility="invisible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:progressDrawable="@drawable/progressnasaearth">
+        </ProgressBar>
+
+        <FrameLayout
+            android:id="@+id/fragmentLocation"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:padding="0dp"
+            android:layout_alignTop="@+id/favouriteList"
+            android:background="@color/colorPrimary">
+
+        </FrameLayout>
+    </LinearLayout>
 
     <Button
         android:id="@+id/DetailsButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@id/favouriteList"
         android:layout_alignParentBottom="true"
         android:layout_weight="12"
-        android:text="Back To Details"/>
+        android:text="Other Pages"/>
 
 
     <EditText
         android:id="@+id/TitleText"
-        android:layout_width="wrap_content"
+        android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:hint="Type Title here"
@@ -45,7 +109,9 @@
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@id/TitleText"
         android:layout_weight="1"
-        android:text="Back To Search" />
+        android:text="Home Page" />
 
 
 </RelativeLayout>
+
+    </LinearLayout>

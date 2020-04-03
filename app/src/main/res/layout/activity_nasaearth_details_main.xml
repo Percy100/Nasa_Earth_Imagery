@@ -1,11 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
  <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:id="@+id/nasaDetailsLayout"
+    tools:context=".NasaEarthDetailsMainActivity"
     android:layout_width="match_parent" android:layout_height="match_parent">
 
-<RelativeLayout
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <androidx.drawerlayout.widget.DrawerLayout
+            android:id="@+id/drawer_layout"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            tools:openDrawer="start">
+
+            <Button
+                android:id="@+id/insert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Welcome To The Possibilities" />
+
+            <com.google.android.material.navigation.NavigationView
+                android:id="@+id/nav_view"
+                android:layout_width="wrap_content"
+                android:layout_height="200dp"
+                android:layout_gravity="start"
+                android:fitsSystemWindows="true"
+                app:headerLayout="@layout/nasaearth_header_layout"
+                app:menu="@menu/nasaearth_drawer" />
+        </androidx.drawerlayout.widget.DrawerLayout>
+
+    </LinearLayout>
+
+
+
+
+
+    <RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -72,6 +113,10 @@
         android:hint="Type action and click action botton">
     </EditText>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
     <Button
         android:id="@+id/addFavButton"
         android:layout_width="match_parent"
@@ -86,9 +131,10 @@
 
     <Button
         android:id="@+id/goToSearch"
-        android:layout_width="match_parent"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:text="Back To Search" />
+        android:text="Home Page" />
+</LinearLayout>
 
     <FrameLayout
         android:id="@+id/fragmentLocation"

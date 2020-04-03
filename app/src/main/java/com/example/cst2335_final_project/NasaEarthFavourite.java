@@ -1,8 +1,13 @@
 package com.example.cst2335_final_project;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -12,8 +17,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,12 +33,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class NasaEarthFavourite extends AppCompatActivity {
+public class NasaEarthFavourite extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     BaseAdapter myAdapter;
     ListView myList;
@@ -39,8 +49,13 @@ public class NasaEarthFavourite extends AppCompatActivity {
 
     private ProgressBar progressBar;
 
+    private NasaEarthFragment dFragment;
+
+    DrawerLayout drawer;
+    NavigationView navigationView;
+
     EditText txtTitle;
-    Button btnGoToDet;
+    Button btnGoToOthers;
     Button btnGoToSearch;
     RelativeLayout nasaFavourite;
 
@@ -58,8 +73,24 @@ public class NasaEarthFavourite extends AppCompatActivity {
         progressBar.setVisibility(View.VISIBLE);
 
         txtTitle = findViewById(R.id.TitleText);
-        btnGoToDet = findViewById(R.id.DetailsButton);
+        btnGoToOthers = findViewById(R.id.DetailsButton);
         btnGoToSearch = findViewById(R.id.SearchButton);
+
+        //This gets the toolbar from the layout:
+        Toolbar tBar = (Toolbar) findViewById(R.id.toolbar);
+
+        //This loads the toolbar, which calls onCreateOptionsMenu below:
+        setSupportActionBar(tBar);
+
+        //For NavigationDrawer:
+        drawer = findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
+                drawer, tBar, R.string.open, R.string.close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        navigationView = findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
 
         nasaFavourite = findViewById(R.id.nasaFavouriteLayout);
 
@@ -92,24 +123,71 @@ public class NasaEarthFavourite extends AppCompatActivity {
         myAdapter.notifyDataSetChanged();
 
 
-        btnGoToDet.setOnClickListener((view)->{
-            Snackbar.make(nasaFavourite, "Loading Details Page", Snackbar.LENGTH_LONG).show();
-//            Intent intent = new Intent(NasaEarthFavourite.this, NasaEarthDetailsMainActivity.class);
-//            startActivity(intent);
+//        btnGoToDet.setOnClickListener((view)->{
+//            Snackbar.make(nasaFavourite, "Loading Details Page", Snackbar.LENGTH_LONG).show();
+////            Intent intent = new Intent(NasaEarthFavourite.this, NasaEarthDetailsMainActivity.class);
+////            startActivity(intent);
+//
+//        });
+//
+//
+//        btnGoToSearch.setOnClickListener((view)-> {
+//            Toast.makeText(NasaEarthFavourite.this, "Loading Search Page", Toast.LENGTH_LONG).show();
+//        });
 
+        btnGoToOthers.setOnClickListener((view)-> {
+            Toast.makeText(NasaEarthFavourite.this, "Click on menu to access other pages", Toast.LENGTH_LONG).show();
         });
-
 
         btnGoToSearch.setOnClickListener((view)-> {
-            Toast.makeText(NasaEarthFavourite.this, "Loading Search Page", Toast.LENGTH_LONG).show();
+            Snackbar snackbar = Snackbar.make(nasaFavourite, "Loading Home Page", Snackbar.LENGTH_LONG).setAction("OK", new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(NasaEarthFavourite.this, MainActivity.class));
+                }
+            });
+            snackbar.show();
         });
 
 
-        myList.setOnItemLongClickListener((parent, view, pos, id) -> {
+        myList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(NasaEarthFavourite.this);
+           //     Message item = messageList.get(position);
 
-        builder.setTitle("Do you want to delete this?")
+//                imgLat = editT1.getText().toString();
+//                inputLongitude = editT2.getText().toString();
+//                String date ="";
+//                String url ="";
+//                NasaEarth ne = new NasaEarth(inputLatitude, inputLongitude, date, url);
+
+                NasaEarth nasaEarth = earthList.get(position);
+                String lat = nasaEarth.getLatitude();
+                String lon = nasaEarth.getLongitude();
+
+                Bundle dataToPass = new Bundle();
+                dataToPass.putString("Latitude", lat);
+                dataToPass.putString("Longitude", lon);
+
+                //Use a Bundle to pass the message string, and the database id of the selected item to the fragment in the FragmentTransaction
+                // if(findViewById(R.id.fragmentLocation) != null) {
+
+                    dFragment = new NasaEarthFragment();
+                    dFragment.setArguments(dataToPass);
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
+                            .commit();
+
+                    }
+
+        });
+                myList.setOnItemLongClickListener((parent, view, pos, id) -> {
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(NasaEarthFavourite.this);
+
+                builder.setTitle("Do you want to delete this?")
                 .setMessage("The selected row is: " + pos + "\n" + "The database is: " + id)
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
@@ -159,6 +237,71 @@ public class NasaEarthFavourite extends AppCompatActivity {
             earthList.add(ne);
         }
     }
+
+
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.nasaearth_toolbar, menu );
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        if (item.getItemId() == R.id.helpItem){
+            // Toast.makeText(this, "Hello world", Toast.LENGTH_LONG).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(NasaEarthFavourite.this);
+
+            builder.setTitle("INSTRUCTIONS")
+                    .setMessage("* Click on menu to access other Pages" + "\n" + "* Scroll to view complete favourite list " + "\n" + "* Click on an item on the favourite to view the details " + "\n" + "* Long-Click on an item on the favourite to delete item ")
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                        }
+                    })
+                    .setNegativeButton(null, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+            //return false;
+            Log.e(ACTIVITY_NAME, "in function onPause()");
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.favActivity:
+                startActivity(new Intent(this, NasaEarthFavourite.class));
+                break;
+            case R.id.detailsActivity:
+                startActivity(new Intent(this, NasaEarthDetailsMainActivity.class));
+                break;
+            case R.id.searchActivity:
+                startActivity(new Intent(this, NasaEarthMainActivity.class));
+                break;
+        }
+
+        DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
+        drawerLayout.closeDrawer(GravityCompat.START);
+
+        return false;
+    }
+
+
+
 
 
 
