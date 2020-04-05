@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.media.Image;
@@ -44,6 +45,10 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.text.DateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.google.android.material.navigation.NavigationView;
@@ -64,12 +69,19 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
     private Button btnGoToSearch;
     private EditText inputText;
     private LinearLayout nasaDetails;
+    private ImageView image;
 
+    private String imgurl;
+
+    private Calendar calendar;
+    private String currentDate;
+
+    private SharedPreferences sp;
 
     private NasaEarthFragment dFragment;
 
-    DrawerLayout drawer;
-    NavigationView navigationView;
+    private DrawerLayout drawer;
+    private NavigationView navigationView;
 
 
     NasaEarthMainActivity nasaEarthMain = new NasaEarthMainActivity();
@@ -97,6 +109,14 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
 
         nasaDetails = findViewById(R.id.nasaDetailsLayout);
 
+        sp = getSharedPreferences("FileName", Context.MODE_PRIVATE);
+
+        Calendar calendar = Calendar.getInstance();
+        String currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+
+      //  txtDate.setText(currentDate);
+
+
         //This gets the toolbar from the layout:
         Toolbar tBar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -112,6 +132,8 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
 
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        inputText.setText(sp.getString("Title", ""));
 
 
         EarthQuery earth = new EarthQuery();
@@ -239,7 +261,6 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
         String date;
         String imageName;
       //  Bitmap imageIcon;
-        String imgurl;
 
 
         @Override
@@ -256,6 +277,12 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
 //            inputLongitude = editT2.getText().toString();
 //            String date ="";
 //            String url ="";
+
+            imgurl = "http://dev.virtualearth.net/REST/V1/Imagery/Map/Birdseye/"+inputLat+","+inputLong+"/20?dir=180&ms=500,500&key=%20Am4AaTUqExihH1ur1tkSwWH1FodthGyd8wlXp8V5ue-Kk24zaV2QWBTxnsza2LJl";
+
+            calendar = Calendar.getInstance();
+            currentDate = DateFormat.getDateInstance().format(calendar.getTime());
+
             NasaEarth ne = new NasaEarth(inputLat, inputLong, date, imgurl);
 
             Bundle dataToPass = new Bundle();
@@ -274,7 +301,7 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
 
         //    String queryURL = "https://api.nasa.gov/planetary/earth/imagery/?lon=" + inputLong +"&lat=" + inputLat + "&date=2014-02-01&api_key=Q767GDDKS75D1mIx6UZjEtWmbppuBzpCLAC53ylJ";
 
-            String queryURL = "http://dev.virtualearth.net/REST/V1/Imagery/Map/Birdseye/37,-122/20?dir=180&ms=500,500&key=%20Am4AaTUqExihH1ur1tkSwWH1FodthGyd8wlXp8V5ue-Kk24zaV2QWBTxnsza2LJl";
+            String queryURL = "http://dev.virtualearth.net/REST/V1/Imagery/Map/Birdseye/" +inputLong+",-"+inputLat+"/20?dir=180&ms=500,500&key=%20Am4AaTUqExihH1ur1tkSwWH1FodthGyd8wlXp8V5ue-Kk24zaV2QWBTxnsza2LJl";
 
             try {
 
@@ -295,8 +322,12 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
 
                 date = jObject.getString("date");
                 publishProgress(35);
-             //   imgurl = jObject.getString("url");
-                imgurl = "http://dev.virtualearth.net/REST/V1/Imagery/Map/Birdseye/37.802297,-122.405844/20?dir=180&ms=500,500&key=%20Am4AaTUqExihH1ur1tkSwWH1FodthGyd8wlXp8V5ue-Kk24zaV2QWBTxnsza2LJl";
+//                imgurl = jObject.getString("url");
+//                imgurl = queryURL;
+              String gurl = "http://dev.virtualearth.net/REST/V1/Imagery/Map/Birdseye/37.802297,-122.405844/20?dir=180&ms=500,500&key=%20Am4AaTUqExihH1ur1tkSwWH1FodthGyd8wlXp8V5ue-Kk24zaV2QWBTxnsza2LJl";
+
+     //         imgurl = gurl;
+
                 publishProgress(70);
                 String id = jObject.getString("id");
                 publishProgress(100);
@@ -322,9 +353,10 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
         @Override
         protected void onPostExecute(String result) {
 
+          //  imgurl = "http://dev.virtualearth.net/REST/V1/Imagery/Map/Birdseye/"+inputLat+","+inputLong+"/20?dir=180&ms=500,500&key=%20Am4AaTUqExihH1ur1tkSwWH1FodthGyd8wlXp8V5ue-Kk24zaV2QWBTxnsza2LJl";
             txtLatitude.setText("Lat:" +" "+inputLat);
             txtLongitude.setText("Long:" +" "+ inputLong);
-            txtDate .setText("Date:" +" "+ date);
+            txtDate .setText("Date:" +" "+ currentDate);
 
             Picasso.with(NasaEarthDetailsMainActivity.this).load(imgurl)
                     .resize(14,10)
@@ -431,6 +463,46 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
 
 
     }
+
+
+    }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        Log.e(ACTIVITY_NAME,"onStart");
+    }
+
+    @Override
+    protected void onPause() {
+        EditText inputText = findViewById(R.id.editTextInput);
+        super.onPause();
+        Log.e(ACTIVITY_NAME,"onPause");
+        saveSharedPrefs( inputText.getText().toString());
+        //      saveSharedPrefs( editText2.getText().toString());
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.e(ACTIVITY_NAME,"onResume");
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.e(ACTIVITY_NAME, "onDestroy");
+    }
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.e(ACTIVITY_NAME, "onRestart");
+    }
+
+
+    private void saveSharedPrefs(String stringToSave) {
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("Title", stringToSave);
+        //       editor.putString("Longitude", stringToSave);
+        editor.commit();
 
     }
 }

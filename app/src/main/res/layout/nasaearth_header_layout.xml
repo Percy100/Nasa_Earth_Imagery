@@ -7,16 +7,16 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nasa Earth"
+        android:text="@string/PrtTitle"
         android:layout_alignParentBottom="true" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Percy"
+        android:text="@string/Name"
         android:layout_alignParentBottom="true" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Version 1"
+        android:text="@string/Version"
         android:layout_alignParentBottom="true" />
 </LinearLayout>

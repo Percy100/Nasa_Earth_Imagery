@@ -28,7 +28,7 @@
                 android:id="@+id/insert"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Welcome To The Possibilities" />
+                android:text="@string/MenuText" />
 
             <com.google.android.material.navigation.NavigationView
                 android:id="@+id/nav_view"
@@ -73,7 +73,7 @@
         android:id="@+id/textLatitude"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Latitude"
+        android:text="@string/Latitude"
         android:layout_toEndOf="@id/imageView"
         android:fontFamily="sans-serif-thin"
         android:textSize="20dp"
@@ -86,7 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textLatitude"
-        android:text="Longitude"
+        android:text="@string/Longitude"
         android:layout_toEndOf="@id/imageView"
         android:textColor="#E91E63"
         android:textSize="20dp"
@@ -101,7 +101,7 @@
         android:layout_toEndOf="@id/imageView"
         android:textColor="#0A8BF1"
         android:layout_marginTop="10dp"
-        android:text="Time" />
+        android:text="@string/Time" />
 
 </RelativeLayout>
 
@@ -110,7 +110,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="fill"
-        android:hint="Type action and click action botton">
+        android:hint="@string/DetTextHint">
     </EditText>
 
     <LinearLayout
@@ -121,19 +121,19 @@
         android:id="@+id/addFavButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/Favourite" />
+        android:text="@string/AddFav" />
 
     <Button
         android:id="@+id/goToFav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/GoToFav" />
+        android:text="@string/ViewFav" />
 
     <Button
         android:id="@+id/goToSearch"
         android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:text="Home Page" />
+        android:text="@string/HomePage" />
 </LinearLayout>
 
     <FrameLayout

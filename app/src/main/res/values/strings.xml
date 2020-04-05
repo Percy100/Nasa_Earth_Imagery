@@ -8,8 +8,8 @@
     <string name="EditText1">Type Latitude here</string>
     <string name="EditText2">Type Longitude here</string>
 
-    <string name="Favourite">Add To Favorite</string>
-    <string name="GoToFav">View Favorite</string>
+    <string name="AddFav">Add To Favorite</string>
+    <string name="ViewFav">View Favorite</string>
 
     <string name="flag">Canada</string>
 
@@ -17,5 +17,36 @@
 
     <string name="open">Open</string>
     <string name="close">Close</string>
+
+    <string name="Bbc">BBC News</string>
+    <string name="Guardian">Guardian News</string>
+    <string name="NasaImage">NASA Image</string>
+    <string name="NasaEarth">NASA Earth</string>
+
+    <string name="MenuText">Welcome To The Possibilities</string>
+    <string name="OtherPages">Other Pages</string>
+    <string name="FavTextHint">Type Tag Name here</string>
+    <string name="HomePage">Home Page</string>
+
+    <string name="Submit">Submit</string>
+
+    <string name="Latitude">Latitude</string>
+    <string name="Longitude">Longitude</string>
+    <string name="Time">Time</string>
+    <string name="DetTextHint">Type action and click</string>
+
+    <string name="LatTextHint">Latitude is required</string>
+    <string name="LongTextHint">Longitude is required</string>
+    <string name="Hide">Hide</string>
+
+    <string name="PrtTitle">Nasa Earth</string>
+    <string name="Name">Percy</string>
+    <string name="Version">Version 1</string>
+
+    <string name="DetPage">Details Page</string>
+    <string name="FavPage">Favorite Page</string>
+    <string name="SearchPage">Search Page</string>
+
+
 
 </resources>

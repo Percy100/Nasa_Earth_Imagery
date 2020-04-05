@@ -12,25 +12,25 @@
         android:id="@+id/button_bbs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="BBC News" />
+        android:text="@string/Bbc" />
 
     <Button
         android:id="@+id/button_guardian"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Guardian News" />
+        android:text="@string/Guardian"/>
 
     <Button
         android:id="@+id/button_nasa_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="NASA Image" />
+        android:text="@string/NasaImage" />
 
     <Button
         android:id="@+id/button_nasa_earth"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="NASA Earth"/>
+        android:text="@string/NasaEarth"/>
 
 
 </LinearLayout>

@@ -28,7 +28,7 @@
                 android:id="@+id/insert"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Welcome To The Possibilities" />
+                android:text="@string/MenuText" />
 
             <com.google.android.material.navigation.NavigationView
                 android:id="@+id/nav_view"
@@ -75,7 +75,7 @@
         <FrameLayout
             android:id="@+id/fragmentLocation"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="140dp"
             android:padding="0dp"
             android:layout_alignTop="@+id/favouriteList"
             android:background="@color/colorPrimary">
@@ -89,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_weight="12"
-        android:text="Other Pages"/>
+        android:text="@string/OtherPages"/>
 
 
     <EditText
@@ -97,7 +97,7 @@
         android:layout_width="170dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:hint="Type Title here"
+        android:hint="@string/FavTextHint"
         android:layout_weight="12"
         android:layout_toEndOf="@id/DetailsButton"
         />
@@ -109,7 +109,7 @@
         android:layout_alignParentBottom="true"
         android:layout_toEndOf="@id/TitleText"
         android:layout_weight="1"
-        android:text="Home Page" />
+        android:text="@string/HomePage" />
 
 
 </RelativeLayout>

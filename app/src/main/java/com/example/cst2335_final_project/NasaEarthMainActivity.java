@@ -30,16 +30,16 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class NasaEarthMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    static final String ACTIVITY_NAME = "NasaEarthMainActivity";
+    private static final String ACTIVITY_NAME = "NasaEarthMainActivity";
 
-    SharedPreferences sp;
+    private SharedPreferences sp;
 
-    Button snackbtn;
-    EditText editT1;
-    EditText editT2;
-    Button toastbtn;
-    Button submitbtn;
-    LinearLayout nasaMain;
+    private Button snackbtn;
+    private EditText editT1;
+    private EditText editT2;
+    private Button toastbtn;
+    private Button submitbtn;
+    private LinearLayout nasaMain;
 
     private String inputLatitude;
     private String inputLongitude;
@@ -47,8 +47,8 @@ public class NasaEarthMainActivity extends AppCompatActivity implements Navigati
 
     private NasaEarthFragment dFragment;
 
-    DrawerLayout drawer;
-    NavigationView navigationView;
+    private DrawerLayout drawer;
+    private NavigationView navigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -11,14 +11,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:hint="Latitude is required" />
+        android:hint="@string/LatTextHint" />
 
     <TextView
         android:id="@+id/LongText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20dp"
-        android:hint="Longitude is required "
+        android:hint="@string/LatTextHint"
         android:layout_below="@+id/LatText"
         />
 
@@ -26,6 +26,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Hide"
+        android:text="@string/Hide"
         android:id="@+id/deleteButton"/>
 </RelativeLayout>

@@ -28,7 +28,7 @@
                 android:id="@+id/insert"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Welcome To The Possibilities" />
+                android:text="@string/MenuText" />
 
             <com.google.android.material.navigation.NavigationView
                 android:id="@+id/nav_view"
@@ -85,7 +85,7 @@
             android:layout_height="match_parent"
             android:layout_columnSpan="1"
             android:layout_gravity="center"
-            android:text="@string/SnackText"
+            android:text="@string/HomePage"
             android:textAlignment="center" />
 
         </LinearLayout>
@@ -93,7 +93,7 @@
         android:id="@+id/submitButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/ButtonText" />
+        android:text="@string/Submit" />
 
         <ProgressBar
             style="?android:attr/progressBarStyleHorizontal"

@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
-public class MyOpener extends SQLiteOpenHelper {
+public class NasaEarthMyOpener extends SQLiteOpenHelper {
 
     protected final static String DATABASE_NAME = "NasaEarthDB";
     protected final static int VERSION_NUM = 1;
@@ -18,7 +18,7 @@ public class MyOpener extends SQLiteOpenHelper {
     public final static String COL_DATE = "DATE";
     public final static String COL_URL = "URL";
 
-    public MyOpener(Context ctx)
+    public NasaEarthMyOpener(Context ctx)
     {
         super(ctx, DATABASE_NAME, null, VERSION_NUM);
     }

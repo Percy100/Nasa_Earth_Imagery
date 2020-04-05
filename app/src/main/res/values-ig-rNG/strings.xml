@@ -4,12 +4,12 @@
     <string name="TextViewText1">Gben email yewan:</string>
     <string name="TextViewText2">Gben esaien yawan:</string>
     <string name="ButtonText"> Lahor </string>
-    <string name="ToastText">Review Your Entry</string>
-    <string name="EditText1">Gben ye vban</string>
-    <string name="EditText2"></string>
+    <string name="ToastText">Ghe evbin nogben </string>
+    <string name="EditText1">Gben akhare ye vban</string>
+    <string name="EditText2">Gben tain ye vban</string>
 
-    <string name="Favourite">Add To Favourite</string>
-    <string name="GoToFav">View Favourite</string>
+    <string name="AddFav">Rieba Noma</string>
+    <string name="ViewFav">Ghe Noma</string>
 
     <string name="flag">Nigeria</string>
 
@@ -17,5 +17,35 @@
 
     <string name="open">Open</string>
     <string name="close">Close</string>
+
+
+    <string name="Bbc">Iyen BBC</string>
+    <string name="Guardian">Iyen Guardian</string>
+    <string name="NasaImage">Amae eNASA</string>
+    <string name="NasaEarth">Agbon eNASA</string>
+
+    <string name="MenuText">Oboghian do vba iyenoma </string>
+    <string name="OtherPages">Ebe ovbere</string>
+    <string name="FavTextHint">Gben eni yevban </string>
+    <string name="HomePage">Ebe okaro </string>
+
+    <string name="Submit">Kpione</string>
+
+    <string name="Latitude">khare</string>
+    <string name="Longitude">tain</string>
+    <string name="Time">Eghe</string>
+    <string name="DetTextHint">gben yevbe kion</string>
+
+    <string name="LatTextHint">gben vbare ye vban</string>
+    <string name="LongTextHint">gben tain ye vban</string>
+    <string name="Hide">Lehe</string>
+
+    <string name="PrtTitle">Agbon Nasa</string>
+    <string name="Name">Percy</string>
+    <string name="Version">Oho okaro</string>
+
+    <string name="DetPage">Ebe Eyia</string>
+    <string name="FavPage">Ebe Noma</string>
+    <string name="SearchPage">Ebe nagualo</string>
 
 </resources>

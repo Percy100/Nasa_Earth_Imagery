@@ -4,7 +4,7 @@
 
 
     <item android:id="@+id/favActivity"
-        android:title="Favourite Page"
+        android:title="@string/FavPage"
         android:icon="@drawable/contact_us"
         android:orderInCategory="200"
         app:showAsAction="never"/>  <!-- This uses showAsAction=always, so look at icon= parameter -->
@@ -14,12 +14,12 @@
         android:icon="@drawable/our_people"
         android:orderInCategory="100"
         app:showAsAction="always"
-        android:title="Details Page"/>
+        android:title="@string/DetPage"/>
 
 
     <item android:id="@+id/searchActivity"
         android:icon="@drawable/complaints"
-        android:title="Search Page"
+        android:title="@string/SearchPage"
         app:showAsAction="always"
         android:orderInCategory="250"/> <!-- This uses showAsAction=never, so look at title= parameter -->
 

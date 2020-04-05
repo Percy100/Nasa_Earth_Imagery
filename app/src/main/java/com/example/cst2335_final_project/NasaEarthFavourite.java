@@ -1,6 +1,5 @@
 package com.example.cst2335_final_project;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,8 +9,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -41,23 +42,25 @@ import java.util.ArrayList;
 
 public class NasaEarthFavourite extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-    BaseAdapter myAdapter;
-    ListView myList;
-    String imgUrl;
-    ImageView imageIcon;
-    SQLiteDatabase db;
+    private BaseAdapter myAdapter;
+    private ListView myList;
+    private String imgUrl;
+    private ImageView imageIcon;
+    private SQLiteDatabase db;
 
     private ProgressBar progressBar;
 
     private NasaEarthFragment dFragment;
 
-    DrawerLayout drawer;
-    NavigationView navigationView;
+    private DrawerLayout drawer;
+    private NavigationView navigationView;
 
-    EditText txtTitle;
-    Button btnGoToOthers;
-    Button btnGoToSearch;
-    RelativeLayout nasaFavourite;
+    private EditText txtTitle;
+    private Button btnGoToOthers;
+    private Button btnGoToSearch;
+    private RelativeLayout nasaFavourite;
+
+    private SharedPreferences sp;
 
 
     private static final String ACTIVITY_NAME = "NasaEarthFavourite";
@@ -76,6 +79,8 @@ public class NasaEarthFavourite extends AppCompatActivity implements NavigationV
         btnGoToOthers = findViewById(R.id.DetailsButton);
         btnGoToSearch = findViewById(R.id.SearchButton);
 
+        sp = getSharedPreferences("FileName", Context.MODE_PRIVATE);
+
         //This gets the toolbar from the layout:
         Toolbar tBar = (Toolbar) findViewById(R.id.toolbar);
 
@@ -92,6 +97,10 @@ public class NasaEarthFavourite extends AppCompatActivity implements NavigationV
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        txtTitle.setText(sp.getString("Name", ""));
+
+
+
         nasaFavourite = findViewById(R.id.nasaFavouriteLayout);
 
         myList = findViewById(R.id.favouriteList);
@@ -104,18 +113,18 @@ public class NasaEarthFavourite extends AppCompatActivity implements NavigationV
         String imgDate = goToFavPage.getStringExtra("dateF");
         imgUrl = goToFavPage.getStringExtra("urlF");
 
-        MyOpener myOp = new MyOpener(this);
+        NasaEarthMyOpener myOp = new NasaEarthMyOpener(this);
         db = myOp.getWritableDatabase();
 
         loadEarths();
 
         ContentValues cv = new ContentValues();
-        cv.put(MyOpener.COL_LATITUDE, imgLat);
-        cv.put(MyOpener.COL_LONGITUDE, imgLong);
-        cv.put(MyOpener.COL_DATE, imgDate);
-        cv.put(MyOpener.COL_URL, imgUrl);
+        cv.put(NasaEarthMyOpener.COL_LATITUDE, imgLat);
+        cv.put(NasaEarthMyOpener.COL_LONGITUDE, imgLong);
+        cv.put(NasaEarthMyOpener.COL_DATE, imgDate);
+        cv.put(NasaEarthMyOpener.COL_URL, imgUrl);
 
-        Long newId = db.insert(MyOpener.TABLE_NAME, null, cv);
+        Long newId = db.insert(NasaEarthMyOpener.TABLE_NAME, null, cv);
 
         NasaEarth nasaEarth = new NasaEarth(newId, imgLat,imgLong,imgDate,imgUrl);
         earthList.add(nasaEarth);
@@ -192,7 +201,7 @@ public class NasaEarthFavourite extends AppCompatActivity implements NavigationV
                 .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        db.delete(MyOpener.TABLE_NAME, MyOpener.COL_ID + "= ?", new String[]{Long.toString(earthList.get(pos).getId())});
+                        db.delete(NasaEarthMyOpener.TABLE_NAME, NasaEarthMyOpener.COL_ID + "= ?", new String[]{Long.toString(earthList.get(pos).getId())});
                         earthList.remove(pos);
                         myAdapter.notifyDataSetChanged();
                     }
@@ -214,15 +223,15 @@ public class NasaEarthFavourite extends AppCompatActivity implements NavigationV
 
 
     private void loadEarths() {
-        String[] columns = {MyOpener.COL_ID, MyOpener.COL_LATITUDE, MyOpener.COL_LONGITUDE, MyOpener.COL_DATE, MyOpener.COL_URL};
-        Cursor cursor = db.query(false, MyOpener.TABLE_NAME, columns, null, null, null, null, null, null);
+        String[] columns = {NasaEarthMyOpener.COL_ID, NasaEarthMyOpener.COL_LATITUDE, NasaEarthMyOpener.COL_LONGITUDE, NasaEarthMyOpener.COL_DATE, NasaEarthMyOpener.COL_URL};
+        Cursor cursor = db.query(false, NasaEarthMyOpener.TABLE_NAME, columns, null, null, null, null, null, null);
         printCursor(cursor);
 
-        int idColIndex = cursor.getColumnIndex(MyOpener.COL_ID);
-        int latitudeColIndex = cursor.getColumnIndex(MyOpener.COL_LATITUDE);
-        int longitudeColIndex = cursor.getColumnIndex(MyOpener.COL_LONGITUDE);
-        int dateColIndex = cursor.getColumnIndex(MyOpener.COL_DATE);
-        int urlColIndex = cursor.getColumnIndex(MyOpener.COL_URL);
+        int idColIndex = cursor.getColumnIndex(NasaEarthMyOpener.COL_ID);
+        int latitudeColIndex = cursor.getColumnIndex(NasaEarthMyOpener.COL_LATITUDE);
+        int longitudeColIndex = cursor.getColumnIndex(NasaEarthMyOpener.COL_LONGITUDE);
+        int dateColIndex = cursor.getColumnIndex(NasaEarthMyOpener.COL_DATE);
+        int urlColIndex = cursor.getColumnIndex(NasaEarthMyOpener.COL_URL);
 
         // if (cursor != null && cursor.moveToFirst())
 
@@ -352,6 +361,7 @@ public class NasaEarthFavourite extends AppCompatActivity implements NavigationV
 
             ImageView imgView = newRow.findViewById(R.id.imageView);
             Picasso.with(NasaEarthFavourite.this).load(getItem(pos).getUrl())
+          //  Picasso.with(NasaEarthFavourite.this).load("http://dev.virtualearth.net/REST/V1/Imagery/Map/Birdseye/37,-122/20?dir=180&ms=500,500&key=%20Am4AaTUqExihH1ur1tkSwWH1FodthGyd8wlXp8V5ue-Kk24zaV2QWBTxnsza2LJl")
                     .resize(14, 10)
                     .centerCrop()
                     .into(imgView);
@@ -392,8 +402,11 @@ public class NasaEarthFavourite extends AppCompatActivity implements NavigationV
     }
 
     @Override
-    protected void onPause()
-    {
+    protected void onPause() {
+        EditText txtTitle = findViewById(R.id.TitleText);
+        super.onPause();
+        Log.e(ACTIVITY_NAME,"onPause");
+        saveSharedPrefs(txtTitle.getText().toString());
         super.onPause();
     }
 
@@ -413,12 +426,12 @@ public class NasaEarthFavourite extends AppCompatActivity implements NavigationV
 
 
     public void printCursor(Cursor cursor) {
-        int idColIndex = cursor.getColumnIndex(MyOpener.COL_ID);
-        int latitudeColIndex = cursor.getColumnIndex(MyOpener.COL_LATITUDE);
-        int longitudeColIndex = cursor.getColumnIndex(MyOpener.COL_LONGITUDE);
-        int dateColIndex = cursor.getColumnIndex(MyOpener.COL_DATE);
-        int urlColIndex = cursor.getColumnIndex(MyOpener.COL_URL);
-        String strDatabaseVersion = "Database version number: " + MyOpener.VERSION_NUM;
+        int idColIndex = cursor.getColumnIndex(NasaEarthMyOpener.COL_ID);
+        int latitudeColIndex = cursor.getColumnIndex(NasaEarthMyOpener.COL_LATITUDE);
+        int longitudeColIndex = cursor.getColumnIndex(NasaEarthMyOpener.COL_LONGITUDE);
+        int dateColIndex = cursor.getColumnIndex(NasaEarthMyOpener.COL_DATE);
+        int urlColIndex = cursor.getColumnIndex(NasaEarthMyOpener.COL_URL);
+        String strDatabaseVersion = "Database version number: " + NasaEarthMyOpener.VERSION_NUM;
         String strNumberOfColumns = "Number of columns = " + cursor.getColumnCount();
         String strNumberOfResults = "Number of results = " + cursor.getCount();
         String strColumnNames = "Name of the columns: "
@@ -433,8 +446,8 @@ public class NasaEarthFavourite extends AppCompatActivity implements NavigationV
             buffer.append("id: " + cursor.getString(idColIndex) + " ");
             buffer.append("latitude: " + cursor.getString(latitudeColIndex) + " ");
             buffer.append("longitude: " + cursor.getString(longitudeColIndex) + " ");
-            buffer.append("latitude: " + cursor.getString(dateColIndex) + " ");
-            buffer.append("isSent: " + cursor.getString(urlColIndex) + " ");
+            buffer.append("date: " + cursor.getString(dateColIndex) + " ");
+            buffer.append("url: " + cursor.getString(urlColIndex) + " ");
         }
         ;
 
@@ -442,5 +455,15 @@ public class NasaEarthFavourite extends AppCompatActivity implements NavigationV
         Log.d(ACTIVITY_NAME, strDatabaseVersion + "\n" + strNumberOfColumns + "\n" + strColumnNames
                 + "\n" + strNumberOfResults + "\n" + buffer.toString());
     }
+
+    private void saveSharedPrefs(String stringToSave) {
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putString("Name", stringToSave);
+        //       editor.putString("Longitude", stringToSave);
+        editor.commit();
+
+    }
+
+
 
 }
