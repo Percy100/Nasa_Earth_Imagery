@@ -1,6 +1,5 @@
 package com.example.cst2335_final_project;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -61,7 +60,6 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
     private TextView txtLatitude;
     private TextView txtLongitude;
     private TextView txtDate;
- //   private ImageView imgEarthImage;
     private Image imgEarthImage;
     private ImageView imageIcon;
     private Button btnAddFavourite;
@@ -89,11 +87,15 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // setContentView loads objects onto the screen.
+        // Before this function, the screen is empty.
         setContentView(R.layout.activity_nasaearth_details_main);
 
         progressBar = findViewById(R.id.progressBar);
         progressBar.setVisibility(View.VISIBLE);
 
+        //Get the fields from the screen:
         txtLatitude = findViewById(R.id.textLatitude);
         txtLongitude = findViewById(R.id.textLongitude);
         txtDate = findViewById(R.id.textDate);
@@ -141,24 +143,6 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
 
         Log.i(ACTIVITY_NAME, "In onCreate()");
 
-
-//        Bundle dataToPass = new Bundle();
-//        dataToPass.putString("Message", item.getMessage());
-//        dataToPass.putString("MessageID", String.valueOf(id));
-//        dataToPass.putBoolean("isTablet", true);
-//        //  bundle.putBoolean("isSend", item.getMsgSent());
-//
-//        //Use a Bundle to pass the message string, and the database id of the selected item to the fragment in the FragmentTransaction
-//        // if(findViewById(R.id.fragmentLocation) != null) {
-//            dFragment = new DetailFragment();
-//            dFragment.setArguments(dataToPass);
-//            getSupportFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
-//                    .commit();
-
-
-
     }
 
 
@@ -186,10 +170,9 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
         return file.exists();
     }
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.nasaearth_toolbar, menu );
         return true;
@@ -199,7 +182,7 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.helpItem){
-            // Toast.makeText(this, "Hello world", Toast.LENGTH_LONG).show();
+
             AlertDialog.Builder builder = new AlertDialog.Builder(NasaEarthDetailsMainActivity.this);
 
             builder.setTitle("INSTRUCTIONS")
@@ -218,13 +201,13 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
 
             AlertDialog alert = builder.create();
             alert.show();
-            //return false;
             Log.e(ACTIVITY_NAME, "in function onPause()");
         }
 
         return true;
     }
 
+    // Needed for the OnNavigationItemSelected interface:
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
@@ -248,19 +231,12 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
 
 
 
-
-
-
-
-
-
     private class EarthQuery extends AsyncTask<String, Integer, String> {
 
         String inputLat;
         String inputLong;
         String date;
         String imageName;
-      //  Bitmap imageIcon;
 
 
         @Override
@@ -272,11 +248,6 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
 
             String ret = null;
             String data;
-
-//            inputLatitude = editT1.getText().toString();
-//            inputLongitude = editT2.getText().toString();
-//            String date ="";
-//            String url ="";
 
             imgurl = "http://dev.virtualearth.net/REST/V1/Imagery/Map/Birdseye/"+inputLat+","+inputLong+"/20?dir=180&ms=500,500&key=%20Am4AaTUqExihH1ur1tkSwWH1FodthGyd8wlXp8V5ue-Kk24zaV2QWBTxnsza2LJl";
 
@@ -322,11 +293,8 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
 
                 date = jObject.getString("date");
                 publishProgress(35);
-//                imgurl = jObject.getString("url");
-//                imgurl = queryURL;
-              String gurl = "http://dev.virtualearth.net/REST/V1/Imagery/Map/Birdseye/37.802297,-122.405844/20?dir=180&ms=500,500&key=%20Am4AaTUqExihH1ur1tkSwWH1FodthGyd8wlXp8V5ue-Kk24zaV2QWBTxnsza2LJl";
 
-     //         imgurl = gurl;
+              String gurl = "http://dev.virtualearth.net/REST/V1/Imagery/Map/Birdseye/37.802297,-122.405844/20?dir=180&ms=500,500&key=%20Am4AaTUqExihH1ur1tkSwWH1FodthGyd8wlXp8V5ue-Kk24zaV2QWBTxnsza2LJl";
 
                 publishProgress(70);
                 String id = jObject.getString("id");
@@ -353,7 +321,6 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
         @Override
         protected void onPostExecute(String result) {
 
-          //  imgurl = "http://dev.virtualearth.net/REST/V1/Imagery/Map/Birdseye/"+inputLat+","+inputLong+"/20?dir=180&ms=500,500&key=%20Am4AaTUqExihH1ur1tkSwWH1FodthGyd8wlXp8V5ue-Kk24zaV2QWBTxnsza2LJl";
             txtLatitude.setText("Lat:" +" "+inputLat);
             txtLongitude.setText("Long:" +" "+ inputLong);
             txtDate .setText("Date:" +" "+ currentDate);
@@ -362,27 +329,7 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
                     .resize(14,10)
                     .centerCrop()
                     .into(imageIcon);
-            progressBar.setVisibility(View.INVISIBLE);
-
-//            if (btnAddFavourite != null) {
-//                btnAddFavourite.setOnClickListener(bt -> {
-//
-//                    String inputLatF = txtLatitude.getText().toString();
-//
-//                    String inputLongF = txtLongitude.getText().toString();
-//                    String dateF = txtDate.getText().toString();
-//                    String urlF = imgurl;
-//
-//                    Intent goToFavPage = new Intent(NasaEarthDetailsMainActivity.this, NasaEarthFavourite.class);
-//                    goToFavPage.putExtra("inputLatF", inputLatF);
-//                    goToFavPage.putExtra("inputLongF", inputLongF);
-//                    goToFavPage.putExtra("dateF", dateF);
-//                    goToFavPage.putExtra("urlF", urlF);
-//                    startActivity(goToFavPage);
-//
-//                    Log.e(ACTIVITY_NAME, "in function onPause()");
-//                });
-//            }
+         //   progressBar.setVisibility(View.INVISIBLE);
 
 
             if (btnAddFavourite != null) {
@@ -402,6 +349,7 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
                             .setPositiveButton("Continue", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+                                    progressBar.setProgress(100);
                                     Intent goToFavPage = new Intent(NasaEarthDetailsMainActivity.this, NasaEarthFavourite.class);
                                     goToFavPage.putExtra("inputLatF", inputLatF);
                                     goToFavPage.putExtra("inputLongF", inputLongF);
@@ -425,14 +373,13 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
 
             }
 
-//            btnGoToFavourite.setOnClickListener(v->{
-//                Snackbar.make(nasaDetails, "Click on menu to access favorite", Snackbar.LENGTH_LONG).show();
-//            });
-
+            //Listen for an insert button click event:
             btnGoToFavourite.setOnClickListener((view)-> {
+                progressBar.setProgress(30);
                 Toast.makeText(NasaEarthDetailsMainActivity.this, "Click on menu to access favorite", Toast.LENGTH_LONG).show();
             });
             inputText.setOnClickListener((view)-> {
+                progressBar.setProgress(70);
                 Toast.makeText(NasaEarthDetailsMainActivity.this, inputText.getText().toString(), Toast.LENGTH_LONG).show();
             });
 
@@ -440,27 +387,12 @@ public class NasaEarthDetailsMainActivity extends AppCompatActivity implements N
                 Snackbar snackbar = Snackbar.make(nasaDetails, "Loading Home Page", Snackbar.LENGTH_LONG).setAction("OK", new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        progressBar.setProgress(100);
                         startActivity(new Intent(NasaEarthDetailsMainActivity.this, MainActivity.class));
                     }
                 });
                 snackbar.show();
             });
-
-
-//            btnGoToSearch.setOnClickListener((view)-> {
-//                Toast.makeText(NasaEarthDetailsMainActivity.this, "Loading Seacrh Page", Toast.LENGTH_LONG).show();
-//            });
-
-
-
-
-
-
-
-
-
-
-
 
     }
 

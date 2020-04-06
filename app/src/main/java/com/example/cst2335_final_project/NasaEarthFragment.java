@@ -38,6 +38,7 @@ public class NasaEarthFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        //Get the fields from the screen:
         txtLat = view.findViewById(R.id.LatText);
         txtLong = view.findViewById(R.id.LongText);
         fragHide = view.findViewById(R.id.deleteButton);

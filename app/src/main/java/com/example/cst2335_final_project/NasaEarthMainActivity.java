@@ -1,6 +1,5 @@
 package com.example.cst2335_final_project;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,6 +52,9 @@ public class NasaEarthMainActivity extends AppCompatActivity implements Navigati
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // setContentView loads objects onto the screen.
+        // Before this function, the screen is empty.
         setContentView(R.layout.activity_nasa_earth_main);
 
         progressBar = findViewById(R.id.progressBar);
@@ -83,7 +85,6 @@ public class NasaEarthMainActivity extends AppCompatActivity implements Navigati
       navigationView.setNavigationItemSelectedListener(this);
 
         editT1.setText(sp.getString("Latitude", ""));
-//        editT2.setText(sp.getString("Longitude", ""));
 
         nasaMain = findViewById(R.id.nasaMainLayout);
 
@@ -109,7 +110,10 @@ public class NasaEarthMainActivity extends AppCompatActivity implements Navigati
                     Snackbar snackbar = Snackbar.make(nasaMain, "Loading Home Page", Snackbar.LENGTH_LONG).setAction("OK", new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            progressBar.setProgress(70);
                             startActivity(new Intent(NasaEarthMainActivity.this, MainActivity.class));
+
+
                         }
                     });
                     snackbar.show();
@@ -118,21 +122,14 @@ public class NasaEarthMainActivity extends AppCompatActivity implements Navigati
         toastbtn.setOnClickListener((view)-> {
         Toast.makeText(NasaEarthMainActivity.this, "Latitude is " + editT1.getText().toString() + " "
                         + "while Longitude is " + editT2.getText().toString(), Toast.LENGTH_LONG).show();
+                            progressBar.setProgress(30);
     });
 
-//        progressBar.setVisibility(View.VISIBLE);
-//        Log.i(ACTIVITY_NAME, "In onProgressUpdate");
 
         submitbtn.setOnClickListener((view) -> {
 
             inputLatitude = editT1.getText().toString();
             inputLongitude = editT2.getText().toString();
-
-//            Intent input = new Intent(NasaEarthMainActivity.this, NasaEarthDetailsMainActivity.class);
-//            input.putExtra("inputLatitude", inputLatitude);
-//            input.putExtra("inputLongitude", inputLongitude);
-        //    startActivity(input);
-
 
             AlertDialog.Builder builder = new AlertDialog.Builder(NasaEarthMainActivity.this);
 
@@ -155,7 +152,9 @@ public class NasaEarthMainActivity extends AppCompatActivity implements Navigati
                                 Intent input = new Intent(NasaEarthMainActivity.this, NasaEarthDetailsMainActivity.class);
                                 input.putExtra("inputLatitude", inputLatitude);
                                 input.putExtra("inputLongitude", inputLongitude);
+                                progressBar.setProgress(100);
                                 startActivity(input);
+
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -166,16 +165,14 @@ public class NasaEarthMainActivity extends AppCompatActivity implements Navigati
             }
             AlertDialog alert = builder.create();
             alert.show();
-            //return false;
         });
-
-
 
 
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.nasaearth_toolbar, menu );
         return true;
@@ -185,7 +182,7 @@ public class NasaEarthMainActivity extends AppCompatActivity implements Navigati
     public boolean onOptionsItemSelected(MenuItem item) {
 
         if (item.getItemId() == R.id.helpItem){
-       // Toast.makeText(this, "Hello world", Toast.LENGTH_LONG).show();
+
             AlertDialog.Builder builder = new AlertDialog.Builder(NasaEarthMainActivity.this);
 
         builder.setTitle("INSTRUCTIONS")
@@ -204,13 +201,14 @@ public class NasaEarthMainActivity extends AppCompatActivity implements Navigati
 
         AlertDialog alert = builder.create();
         alert.show();
-        //return false;
+
         Log.e(ACTIVITY_NAME, "in function onPause()");
     }
 
         return true;
     }
 
+    // Needed for the OnNavigationItemSelected interface:
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
@@ -233,8 +231,6 @@ public class NasaEarthMainActivity extends AppCompatActivity implements Navigati
     }
 
 
-
-
     @Override
     protected void onStart(){
         super.onStart();
@@ -248,8 +244,8 @@ public class NasaEarthMainActivity extends AppCompatActivity implements Navigati
         super.onPause();
         Log.e(ACTIVITY_NAME,"onPause");
         saveSharedPrefs( editText1.getText().toString());
-  //      saveSharedPrefs( editText2.getText().toString());
     }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -269,11 +265,8 @@ public class NasaEarthMainActivity extends AppCompatActivity implements Navigati
     private void saveSharedPrefs(String stringToSave) {
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("Latitude", stringToSave);
- //       editor.putString("Longitude", stringToSave);
         editor.commit();
 
     }
-
-
 
 }

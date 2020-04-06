@@ -8,8 +8,8 @@ public class NasaEarth {
 
     private String latitude, longitude, date, url;
     private long id;
- //   private ImageView image;
 
+    /**Constructor:*/
     public NasaEarth(String latitude, String longitude, String date, String url) {
         this.latitude = latitude;
         this.longitude = longitude;

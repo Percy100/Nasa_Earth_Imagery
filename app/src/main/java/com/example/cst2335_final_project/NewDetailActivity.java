@@ -12,6 +12,9 @@ public class NewDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // setContentView loads objects onto the screen.
+        // Before this function, the screen is empty.
         setContentView(R.layout.activity_new_detail);
 
 
@@ -21,6 +24,7 @@ public class NewDetailActivity extends AppCompatActivity {
         String description = getIntent().getStringExtra("description");
         String url = getIntent().getStringExtra("url");
 
+        //Get the fields from the screen:
         TextView titleText =findViewById(R.id.bbsnews_detailed_title);
         titleText.setText(title);
 

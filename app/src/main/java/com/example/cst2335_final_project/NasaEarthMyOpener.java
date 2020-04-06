@@ -24,6 +24,8 @@ public class NasaEarthMyOpener extends SQLiteOpenHelper {
     }
 
 
+    //This function gets called if no database file exists.
+    //Look on your device in the /data/data/package-name/database directory.
     @Override
     public void onCreate(SQLiteDatabase db) {
 
@@ -34,6 +36,7 @@ public class NasaEarthMyOpener extends SQLiteOpenHelper {
                 + COL_URL  + " text);");
     }
 
+    //this function gets called if the database version on your device is lower than VERSION_NUM
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
@@ -41,6 +44,7 @@ public class NasaEarthMyOpener extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    //this function gets called if the database version on your device is higher than VERSION_NUM
     @Override
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
